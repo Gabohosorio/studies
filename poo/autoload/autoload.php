@@ -1,12 +1,14 @@
 <?php
+  //Forma 1
+  // function autoload($class) {
+  //   require_once ($class . ".php");
+  // }
+  // spl_autoload_register('autoload');
+
+  //Forma 2
   function autoload($class) {
-    $file = $class . '.php';
-    if (file_exists($file)) {
-      require_once $file;
-      echo "Clase '$class' cargada desde el archivo '$file'.<br>";
-    } else {
-      echo "Error: No se pudo cargar la clase '$class'.";
-    }
+    require_once ($class . ".php");
+    echo $class . ".php <br>";
   }
   spl_autoload_register('autoload');
 ?>

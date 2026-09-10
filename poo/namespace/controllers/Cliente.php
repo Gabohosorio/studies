@@ -1,6 +1,7 @@
 <?php
   namespace Controllers;
-  require_once '../models/Persona.php';
+  //require_once '../models/Persona.php'; //Forma 1
+  //require_once '../autoload.php'; //Forma 2
   use models\Persona;
   
   class Cliente extends Persona {
