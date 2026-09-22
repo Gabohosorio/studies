@@ -22,29 +22,34 @@
     $params = rtrim($params, ',');
   }
 
-  //Parte 5
-  spl_autoload_register(function($class){
-    if(file_exists("libraries/core/".$class.".php")){
-      require_once("libraries/core/".$class.".php");
-    }
-  });
+  //Parte 6
+  require_once('libraries/core/Autoload.php');
+  require_once('libraries/core/Load.php');
 
-  //Parte 4
-  $controller = ucwords($controller);
-  $controllerFile = "Controllers/".$controller.".php";
-  if(file_exists($controllerFile)){
-    //Parte 4
-    //echo "Se encontró el controlador: " . $controllerFile . "<br>";
-    require_once($controllerFile);
-    $controller = new $controller();
-    if(method_exists($controller, $method)){
-      $controller->{$method}($params);
-    }else{
-      echo "El método no existe";
-    }
-  }else{
-    echo "El controlador no existe";
-  }
+  //Parte 5 //Parte 6 Se pasa al Autoload.php
+  // Hace la autocarga de las clases que se requieran cuando hay un "= new"
+  // spl_autoload_register(function($class){
+  //   if(file_exists("libraries/core/".$class.".php")){
+  //     require_once("libraries/core/".$class.".php");
+  //   }
+  // });
+
+  //Parte 4 //Parte 6 se pasa al Load.php
+  // $controller = ucwords($controller);
+  // $controllerFile = "Controllers/".$controller.".php";
+  // if(file_exists($controllerFile)){
+  //   //Parte 4
+  //   //echo "Se encontró el controlador: " . $controllerFile . "<br>";
+  //   require_once($controllerFile);
+  //   $controller = new $controller();
+  //   if(method_exists($controller, $method)){
+  //     $controller->{$method}($params);
+  //   }else{
+  //     echo "El método no existe";
+  //   }
+  // }else{
+  //   echo "El controlador no existe";
+  // }
   
   //Parte 3 
   // echo "Controller: " . $controller . "<br>";

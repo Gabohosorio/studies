@@ -15,22 +15,33 @@
       parent::__construct();
     }
 
-    public function home(){
+    public function home($params){
       //Forma 1
       //echo "Bienvendio a la página de inicio";
 
       //Forma 3
-      $this->views->getView($this, "home");
+      //$nombre = "Pedro Ramirez";
+
+      //Forma 5
+      $data['page_tag'] = "Home";
+      $data['page_title'] = "Página principal - Pedro Ramírez";
+      $data['page_name'] = "home";
+
+      $data['datosPersonales'] = $this->model->datosPersonales();
+
+      //Forma 4
+      $this->views->getView($this, "home", $data);
     }
 
-    public function datos($params){
-      //Forma 1
-      //echo "Datos: " . $params;
+    //Formas 1 y 2
+    // public function datos($params){
+    //   //Forma 1
+    //   //echo "Datos: " . $params;
 
-      //Forma 2
-      $mensaje = $this->model->mensaje($params);
-      echo $mensaje;
-    }
+    //   //Forma 2
+    //   $mensaje = $this->model->mensaje($params);
+    //   echo $mensaje;
+    // }
 
   }//End class Home
 ?>

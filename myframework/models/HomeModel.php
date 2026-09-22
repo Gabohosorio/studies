@@ -10,8 +10,16 @@
     // }
 
     //Forma 2
-    public function mensaje($params){
-      return "Datos: " . $params;
+    // public function mensaje($params){
+    //   return "Datos: " . $params;
+    // }
+
+    //Forma 3
+    public function datosPersonales(){
+      $datos['nombre'] = 'Juan Pérez';
+      $datos['email'] = 'juan@data.com';
+      $datos['sitioweb'] = 'www.eljuan.com';
+      return $datos; 
     }
 
   }//End class HomeModel

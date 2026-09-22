@@ -2,7 +2,7 @@
   class Controllers{
     public function __construct(){
       //Parte 2
-      $this->views = new Views();
+      $this->views = new Views(); //Instancia de la clase views
       //Parte 1
       $this->loadModel();
     }
@@ -13,7 +13,7 @@
       $routClass = "models/".$model.".php"; // models/HomeModel.php
       if(file_exists($routClass)){
         require_once($routClass);
-        $this->model = new $model();
+        $this->model = new $model(); //$this->model puede ser invocado por hijos
       }
     }
   }//End class Controllers
