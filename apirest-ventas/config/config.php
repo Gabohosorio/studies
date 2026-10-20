@@ -1,6 +1,6 @@
 <?php
   //define ("base_url", "http://localhost/studies/apirest-ventas/");
-  const base_url = "http://localhost/studies/apirest-ventas/";
+  const base_url = "http://apirest-ventas.gt/";
 
   //Datos de conexión
   const CONNECTION = true;

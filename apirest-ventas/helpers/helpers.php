@@ -50,5 +50,38 @@
     $string = str_ireplace("==","",$string);
     return $string;
   }
+
+  function jsonResponse(array $arrData, int $code){
+    if(is_array($arrData)){
+      header("HTTP/1.1 ".$code);
+      header("Content-Type: application/json");
+      echo json_encode($arrData, true);
+    }
+  }
+
+  function testString(string $data){
+    $re = '/[a-zA-ZñÑáÁéÉíÍóÓúÚ\\s]/m';
+    //función original
+      //preg_match_all($re, $str, $matches, PREG_SET_ORDER, 0);
+    //La cambiamos por
+    if(preg_match($re, $data)){
+      return true;
+    }else{
+      return false;
+    }
+  }
   
+  function nada(){
+// {
+//   "identificacion":"454545",
+//   "nombres":"Julio Fernando",
+//   "apellidos":"Contreras Pérez",
+//   "telefono":300200100,
+//   "email":"soyjulio@ejemplo.com",
+//   "direccion":"Calle siempre viva",
+//   "nit":"K5665",
+//   "nombreFiscal":"Julio Fercho Contre",
+//   "direccionFiscal":"Avenida aquí estoy"
+// }
+  }
 ?>
