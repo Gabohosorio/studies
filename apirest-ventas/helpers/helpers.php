@@ -17,7 +17,7 @@
     return $format;
   }
 
-  //Elimina exceso de espacios entre palabras
+  //Elimina exceso de espacios entre palabras y posibles ataques injection
   function strClean($strCadena){
     $string = preg_replace(['/\s+/','/^\s|\s$/'],[' ',''], $strCadena);
     $string = trim($string); //Elimina espacios en blanco al inicio y al final
@@ -60,11 +60,29 @@
   }
 
   function testString(string $data){
-    $re = '/[a-zA-ZñÑáÁéÉíÍóÓúÚ\\s]/m';
+    $re = '/^[a-zA-ZñÑáÁéÉíÍóÓúÚ\s]+$/m';
     //función original
       //preg_match_all($re, $str, $matches, PREG_SET_ORDER, 0);
     //La cambiamos por
     if(preg_match($re, $data)){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  function testEntero($num){
+    $re = '/^[0-9]+$/m';
+    if(preg_match($re, $num)){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  function testEmail(string $email){
+    $re = '/[a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*(\\.[a-zA-Z]{2,3})$/m';
+    if(preg_match($re, $email)){
       return true;
     }else{
       return false;
