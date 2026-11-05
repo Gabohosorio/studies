@@ -27,9 +27,11 @@
     public function getAll(string $sql){
       try{
         $this->sql = $sql;
-        $query = $this->conex->query($this->sql);
+        $query = $this->conex->query($sql);
         $datos = $query->fetchall(PDO::FETCH_ASSOC); //Datos como arreglo
         $query->closeCursor();
+        dep($datos);
+        die();
         return $datos;
       }catch(Exception $er){
         $result = "Error: ".$er->getMessage();

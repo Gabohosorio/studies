@@ -1,3 +1,3 @@
 <?php
-  define("base_url", "http://localhost/progsoftB/");
+  define("base_url", "http://localhost/studies/progsoftB/");
 ?>

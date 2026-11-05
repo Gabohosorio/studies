@@ -6,7 +6,7 @@
     }
 
     public function cliente($id){
-      echo "Extrae información del cliente".$id;
+      echo "Extrae información del cliente: ".$id;
     }
 
     // Forma 1
@@ -153,10 +153,15 @@
           $strNomFiscal = !empty($data['nombreFiscal']) ? strClean($data['nombreFiscal']) : "";
           $strDirFiscal = !empty($data['direccionFiscal']) ? strClean($data['direccionFiscal']) : "";
 
-          $request = $this->model->setCliente($strIdentificacion, $strNombres, $strApellidos,
+          $request = $this->model->setCliente($strIdentificacion, $strNombres, $strApellidos, 
                      $intTelefono, $strEmail, $strDireccion, $strNit, $strNomFiscal, $strDirFiscal);
-          
-          //dep($data);
+          exit;
+
+          $identi = $data['identificacion'];
+          dep($identi);
+          die();
+
+          //2dep($data);
           exit;
           $response = array('status' => true, 'msg' => 'Datos guardados correctamente');
           $code = 200;
