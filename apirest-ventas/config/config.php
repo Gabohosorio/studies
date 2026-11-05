@@ -5,8 +5,9 @@
   //Datos de conexión
   const CONNECTION = true;
   const dbHost = "localhost";
+  const dbPort = "3309";
   const dbName = "sistemacreditos";
   const dbUser = "root";
   const dbPass = "";
-  const dbChar = "utf8mdb";
+  const dbChar = "utf8mb4";
 ?>

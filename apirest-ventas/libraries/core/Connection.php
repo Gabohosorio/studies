@@ -2,27 +2,32 @@
   class Connection{
     //Forma 1
     // private $host = 'localhost';
+    // private $port = '3309';
     // private $user = 'root';
     // private $pass = '';
-    // private $name = 'prestamvc';
+    // private $name = 'sistemacreditos';
     private $conn;
 
     public function __construct(){
       if(CONNECTION){
         try{
           //Forma 1
-          //$this->conn = new mysqli($this->host, $this->user, $this->pass, $this->name);
+          // $connString = "mysql:host=".$this->host.";port=".$this->port.";dbname=".$this->name.";charset=utf8mb4";
+          // $this->conn = new PDO($connString,$this->user,$this->pass);
+          // $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
           //Forma 2
-          $this->conn = new mysqli(dbHost, dbUser, dbPass, dbName);
-        }catch(Exception $er){
-          $this->conn = "Error en la conexión";
+          $connString = "mysql:host=".dbHost.";port=".dbPort.";dbname=".dbName.";charset=".dbChar;
+          $this->conn = new PDO($connString,dbUser,dbPass);
+          $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        }catch(PDOException $er){
           echo "Error: " . $er->getMessage();
+          die();
         }
       }
     }
 
     public function connect(){
-      header('Content-Type: text/html; charset='.dbChar);
       date_default_timezone_set('America/Bogota');
       return $this->conn;
     }

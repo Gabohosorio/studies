@@ -89,17 +89,4 @@
     }
   }
   
-  function nada(){
-// {
-//   "identificacion":"454545",
-//   "nombres":"Julio Fernando",
-//   "apellidos":"Contreras Pérez",
-//   "telefono":300200100,
-//   "email":"soyjulio@ejemplo.com",
-//   "direccion":"Calle siempre viva",
-//   "nit":"K5665",
-//   "nombreFiscal":"Julio Fercho Contre",
-//   "direccionFiscal":"Avenida aquí estoy"
-// }
-  }
 ?>
