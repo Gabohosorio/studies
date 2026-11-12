@@ -9,112 +9,12 @@
       echo "Extrae información del cliente: ".$id;
     }
 
-    // Forma 1
-    // public function registro(){
-    //   echo "Registro de clientes";
-    // }
+    public function todos(){
+      echo "Extrae todos los clientes";
+    }
 
-    // Forma 2
-    // public function registro(){
-    //   try{
-    //     $method = $_SERVER['REQUEST_METHOD'];
-    //     //echo $method; //muestra el tipo de método request
-    //     if($method == "POST"){
-    //       echo "Realizar el proceso";
-    //     }else{
-    //       echo "Error en tipo de método";
-    //     }
-    //   }catch(Exception $er){
-    //     echo "Error: ". $er->getMessage();
-    //   }
-    // }
-
-    // Forma 3
-    // public function registro(){
-    //   try{
-    //     //dep($_SERVER);
-    //     //exit;
-    //     $method = $_SERVER['REQUEST_METHOD'];
-    //     $response = [];
-    //     if($method == "POST"){
-    //       $response = array('status' => true, 'msg' => 'Datos guardados correctamente');
-    //       $code = 200;
-    //     }else{
-    //       $response = array('status' => false, 'msg' => 'Error en la solicitud '.$method);
-    //       $code = 400;
-    //     }
-    //     // esto se pasa al helper para reutilizar el código
-    //     // header("HTTP/1.1 ".$code); //Status code response
-    //     // header("Content-Type: application/json");
-    //     // echo json_encode($response, true);
-    //     jsonResponse($response, $code);
-    //     die();
-    //   }catch(Exception $er){
-    //     echo "Error: ". $er->getMessage();
-    //   }
-    //   die();
-    // }
-
-    // // Forma 4
-    // public function registro(){
-    //   try{
-    //     $method = $_SERVER['REQUEST_METHOD'];
-    //     $response = [];
-    //     if($method == "POST"){
-    //       //dep($_POST);
-    //       //exit;
-    //       $data = file_get_contents('php://input');
-    //       $data = json_decode($data, true);
-    //       //dep($data);
-    //       echo "Identificación: " . $data['identificacion'];
-    //       exit;
-    //       $response = array('status' => true, 'msg' => 'Datos guardados correctamente');
-    //       $code = 200;
-    //     }else{
-    //       $response = array('status' => false, 'msg' => 'Error en la solicitud '.$method);
-    //       $code = 400;
-    //     }
-    //     jsonResponse($response, $code);
-    //     die();
-    //   }catch(Exception $er){
-    //     echo "Error: ". $er->getMessage();
-    //   }
-    //   die();
-    // }
-
-    // // Forma 5
-    // public function registro(){
-    //   try{
-    //     $method = $_SERVER['REQUEST_METHOD'];
-    //     $response = [];
-    //     if($method == "POST"){
-    //       $data = json_decode(file_get_contents('php://input'), true);
-    //       //dep($data['nombres']);
-    //       dep(testString($data['nombres']));
-    //       dep(testEntero($data['telefono']));
-    //       dep(testEmail($data['email']));
-    //       if(!testString($data['nombres']) or !testEntero($data['telefono']) or !testEmail($data['email'])){
-    //         echo "Error en los datos";
-    //       }
-    //       dep($data);
-    //       exit;
-    //       $response = array('status' => true, 'msg' => 'Datos guardados correctamente');
-    //       $code = 200;
-    //     }else{
-    //       $response = array('status' => false, 'msg' => 'Error en la solicitud '.$method);
-    //       $code = 400;
-    //     }
-    //     jsonResponse($response, $code);
-    //     die();
-    //   }catch(Exception $er){
-    //     echo "Error: ". $er->getMessage();
-    //   }
-    //   die();
-    // }
-
-    // Forma 6
     public function registro(){
-      try{
+      try{ //dep($_SERVER);
         $method = $_SERVER['REQUEST_METHOD'];
         $response = [];
         if($method == "POST"){
@@ -123,19 +23,19 @@
             $response = array('status' => false, 'msg' => 'Identificación requerida');
             jsonResponse($response, 200); die();
           }
-          if(!testString($data['nombres'])){
+          if(empty($data['nombres']) or !testString($data['nombres'])){
             $response = array('status' => false, 'msg' => 'Error en los nombres');
             jsonResponse($response, 200); die();
           }
-          if(!testString($data['apellidos'])){
+          if(empty($data['apellidos']) or !testString($data['apellidos'])){
             $response = array('status' => false, 'msg' => 'Error en los apellidos');
             jsonResponse($response, 200); die();
           }
-          if(!testEntero($data['telefono'])){
+          if(empty($data['telefono']) or !testEntero($data['telefono'])){
             $response = array('status' => false, 'msg' => 'Error en el teléfono');
             jsonResponse($response, 200); die();
           }
-          if(!testEmail($data['email'])){
+          if(empty($data['email']) or !testEmail($data['email'])){
             $response = array('status' => false, 'msg' => 'Error en el email');
             jsonResponse($response, 200); die();
           }
@@ -155,16 +55,26 @@
 
           $request = $this->model->setCliente($strIdentificacion, $strNombres, $strApellidos, 
                      $intTelefono, $strEmail, $strDireccion, $strNit, $strNomFiscal, $strDirFiscal);
-          exit;
-
-          $identi = $data['identificacion'];
-          dep($identi);
-          die();
-
-          //2dep($data);
-          exit;
-          $response = array('status' => true, 'msg' => 'Datos guardados correctamente');
-          $code = 200;
+          
+          if($request > 0){
+            $arrCliente = array('idcliente' => $request,
+                                'identificacion' => $strIdentificacion,
+                                'nombres' => $strNombres,
+                                'apellidos' => $strApellidos,
+                                'telefono' => $intTelefono,
+                                'email' => $strEmail,
+                                'direccion' => $strDireccion,
+                                'nit' => $strNit,
+                                'nombreFiscal' => $strNomFiscal,
+                                'direccionFiscal' => $strDirFiscal
+                                );
+            $response = array('status' => true, 'msg' => 'Datos guardados correctamente',
+                              'data' => $arrCliente);
+            $code = 200;
+          }else{
+            $response = array('status' => false, 'msg' => 'Identificación o Email ya existe');
+            $code = 409;
+          }
         }else{
           $response = array('status' => false, 'msg' => 'Error en la solicitud '.$method);
           $code = 400;
@@ -177,12 +87,65 @@
       die();
     }
 
-    public function todos(){
-      echo "Extrae todos los clientes";
-    }
-
     public function actualizar($id){
-      echo "Actualiza la información del cliente".$id;
+      try{
+        $method = $_SERVER['REQUEST_METHOD'];
+        $response = [];
+        if($method == "PUT"){
+          $data = json_decode(file_get_contents('php://input'), true);
+          if(empty($id) or !is_numeric($id)){
+            $response = array('status' => false, 'msg' => 'Error en el Id enviado');
+            $code = 406; jsonResponse($response, $code); die();
+          }
+          if(empty($data['identificacion'])){
+            $response = array('status' => false, 'msg' => 'Identificación requerida');
+            jsonResponse($response, 200); die();
+          }
+          if(empty($data['nombres']) or !testString($data['nombres'])){
+            $response = array('status' => false, 'msg' => 'Error en los nombres');
+            jsonResponse($response, 200); die();
+          }
+          if(empty($data['apellidos']) or !testString($data['apellidos'])){
+            $response = array('status' => false, 'msg' => 'Error en los apellidos');
+            jsonResponse($response, 200); die();
+          }
+          if(empty($data['telefono']) or !testEntero($data['telefono'])){
+            $response = array('status' => false, 'msg' => 'Error en el teléfono');
+            jsonResponse($response, 200); die();
+          }
+          if(empty($data['email']) or !testEmail($data['email'])){
+            $response = array('status' => false, 'msg' => 'Error en el email');
+            jsonResponse($response, 200); die();
+          }
+          if(empty($data['direccion'])){
+            $response = array('status' => false, 'msg' => 'Dirección requerida');
+            jsonResponse($response, 200); die();
+          }
+          $strIdentificacion = $data['identificacion'];
+          $strNombres = ucwords(strtolower($data['nombres']));
+          $strApellidos = ucwords(strtolower($data['apellidos']));
+          $intTelefono = $data['telefono'];
+          $strEmail = strtolower($data['email']);
+          $strDireccion = $data['direccion'];
+          $strNit = !empty($data['nit']) ? strClean($data['nit']) : "";
+          $strNomFiscal = !empty($data['nombreFiscal']) ? strClean($data['nombreFiscal']) : "";
+          $strDirFiscal = !empty($data['direccionFiscal']) ? strClean($data['direccionFiscal']) : "";
+
+          $request = $this->model->putCliente($id, $strIdentificacion, $strNombres, $strApellidos, 
+                     $intTelefono, $strEmail, $strDireccion, $strNit, $strNomFiscal, $strDirFiscal);
+
+          $response = array('status' => true, 'msg' => 'Datos guardados correctamente', 'data' => "");
+          $code = 200;
+        }else{
+          $response = array('status' => false, 'msg' => 'Error en la solicitud '.$method);
+          $code = 400;
+        }
+        jsonResponse($response, $code);
+        die();
+      }catch(Exception $er){
+        echo "Error: ". $er->getMessage();
+      }
+      die();
     }
 
     public function eliminar($id){
