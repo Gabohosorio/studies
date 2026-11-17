@@ -131,11 +131,36 @@
           $strNomFiscal = !empty($data['nombreFiscal']) ? strClean($data['nombreFiscal']) : "";
           $strDirFiscal = !empty($data['direccionFiscal']) ? strClean($data['direccionFiscal']) : "";
 
+          $searchId = $this->model->getCliente($id);
+          // dep($searchId); exit;
+          if(empty($searchId)){
+            $response = array('status' => false, 'msg' => 'El Id del cliente no existe');
+            $code = 409;
+            jsonResponse($response, $code);
+            die();
+          }
+
           $request = $this->model->putCliente($id, $strIdentificacion, $strNombres, $strApellidos, 
                      $intTelefono, $strEmail, $strDireccion, $strNit, $strNomFiscal, $strDirFiscal);
-
-          $response = array('status' => true, 'msg' => 'Datos guardados correctamente', 'data' => "");
-          $code = 200;
+          if($request){
+            $arrCliente = array('idcliente' => $id,
+                                'identificacion' => $strIdentificacion,
+                                'nombres' => $strNombres,
+                                'apellidos' => $strApellidos,
+                                'telefono' => $intTelefono,
+                                'email' => $strEmail,
+                                'direccion' => $strDireccion,
+                                'nit' => $strNit,
+                                'nombreFiscal' => $strNomFiscal,
+                                'direccionFiscal' => $strDirFiscal
+                                );
+            $response = array('status' => true, 'msg' => 'Datos actualizados correctamente',
+                              'data' => $arrCliente);
+            $code = 200;
+          }else{
+            $response = array('status' => false, 'msg' => 'Identificación o email ya existen');
+            $code = 409;
+          }
         }else{
           $response = array('status' => false, 'msg' => 'Error en la solicitud '.$method);
           $code = 400;
